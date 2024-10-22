@@ -1,7 +1,7 @@
 import styles from './explore.module.css';
 import Layout from '../layout';
 
-import Article from '../../components/explore/article';
+import ArticleCard from '../../components/explore/article-card';
 import SearchBar from '../../components/explore/search-bar';
 
 export default function Explore() {
@@ -12,13 +12,13 @@ export default function Explore() {
       <SearchBar />
 
       <section className={ styles[`explore__articles`] }>
-        <Article 
+        <ArticleCard 
           img='https://th.bing.com/th/id/OIP.FY3xcwVCza7NoAxsWEK0PQHaGp?rs=1&pid=ImgDetMain'
           title='Article 1'
           type='subject'
         />
 
-        <Article 
+        <ArticleCard 
           img='https://th.bing.com/th/id/OIP.FY3xcwVCza7NoAxsWEK0PQHaGp?rs=1&pid=ImgDetMain'
           title='Article 1'
           type='course'

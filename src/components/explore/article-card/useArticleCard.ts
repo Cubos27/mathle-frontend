@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-export default function useArticle( type : string, title : string) {
+export default function useArticleCard( type : string, title : string) {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
