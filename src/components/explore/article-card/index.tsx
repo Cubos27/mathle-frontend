@@ -1,16 +1,17 @@
 import useArticleCard from './useArticleCard';
 
-import styles from './article.module.css';
+import styles from './article-card.module.css';
 import MainButton from '../../main-button';
 
 interface ArticleProps {
   img: string;
   title: string;
   type: string;
+  article: boolean;
 }
 
-export default function Article({ img, title, type } : ArticleProps) {
-  const { handleNavigation } = useArticleCard( type, title);
+export default function Article({ img, title, type, article } : ArticleProps) {
+  const { handleNavigation } = useArticleCard( type, title, article );
   return (
     <article className={ styles[`article-card`] }>
       

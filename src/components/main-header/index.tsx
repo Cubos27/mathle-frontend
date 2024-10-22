@@ -9,8 +9,9 @@ import MainButton from '../main-button';
 export default function MainHeader() {
   const navigate = useNavigate();
   const ALT_TEXT = 'Mathle Icon';
-  const EXPLORE = `${ WEBSITE_ADDRESS }/explore`;
-  const SIGN_UP = `${ WEBSITE_ADDRESS }/sign-up`;
+  const EXPLORE = `/explore`;
+  const SIGN_UP = `/sign-up`;
+  const LOCAL_HOME = `/`;
 
   const handleNavigation = () => {
     navigate( SIGN_UP );
@@ -19,10 +20,12 @@ export default function MainHeader() {
   return (
     <header className={ styles[`main-header`] }>
       <figure className={ styles[`main-header__logo`] } >
-        <img 
-          src={ mathle_icon } 
-          alt={ ALT_TEXT }
-        />
+        <Link to={ LOCAL_HOME }>
+          <img 
+            src={ mathle_icon } 
+            alt={ ALT_TEXT }
+          />
+        </Link>
       </figure>
 
       <section className={ styles[`main-header__section`] }>

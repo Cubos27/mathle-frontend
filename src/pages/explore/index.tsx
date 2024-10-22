@@ -22,6 +22,7 @@ export default function Explore() {
           img='https://th.bing.com/th/id/OIP.FY3xcwVCza7NoAxsWEK0PQHaGp?rs=1&pid=ImgDetMain'
           title='Article 1'
           type='course'
+          article
         />
       </section>
       

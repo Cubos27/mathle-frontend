@@ -7,8 +7,6 @@ export default function Up() {
   const { buttonDisplay, scrollUp } = useUp();
   const ALT_TEXT = 'Go up';
 
-  console.log(buttonDisplay);
-
   return (
     <button 
       className={ `${ styles[`up`] } ${ buttonDisplay ? styles[`up--displayed`] : styles[`up--hidden`] }`  } 
