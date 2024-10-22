@@ -1,0 +1,9 @@
+.main-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--secondary-color);
+  color: var(--custom-white);
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}

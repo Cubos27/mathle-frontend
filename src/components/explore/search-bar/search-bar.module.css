@@ -1,0 +1,21 @@
+.search-bar {
+	display: flex;
+	column-gap: var(--horizontal-gap);
+  flex-wrap: wrap;
+	margin-top: 1rem;
+}
+
+.search-bar__input {
+  width: 20dvw;
+  min-width: 10rem;
+  border: var(--custom-black) 1px solid;
+  padding: 0.5rem;
+}
+
+.search-bar__search {
+  display: none;
+}
+
+.search-bar__reset {
+  display: none;
+}
