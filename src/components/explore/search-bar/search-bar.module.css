@@ -1,15 +1,17 @@
 .search-bar {
 	display: flex;
 	column-gap: var(--horizontal-gap);
+  row-gap: var(--vertical-gap);
   flex-wrap: wrap;
 	margin-top: 1rem;
 }
 
 .search-bar__input {
   width: 20dvw;
-  min-width: 10rem;
+  min-width: 15rem;
   border: var(--custom-black) 1px solid;
   padding: 0.5rem;
+  background-color: transparent;
 }
 
 .search-bar__search {

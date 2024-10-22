@@ -11,9 +11,20 @@ export default function Explore() {
 
       <SearchBar />
 
-      <section>
-        <Article />
+      <section className={ styles[`explore__articles`] }>
+        <Article 
+          img='https://th.bing.com/th/id/OIP.FY3xcwVCza7NoAxsWEK0PQHaGp?rs=1&pid=ImgDetMain'
+          title='Article 1'
+          type='subject'
+        />
+
+        <Article 
+          img='https://th.bing.com/th/id/OIP.FY3xcwVCza7NoAxsWEK0PQHaGp?rs=1&pid=ImgDetMain'
+          title='Article 1'
+          type='course'
+        />
       </section>
+      
     </Layout>
   )
 }

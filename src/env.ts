@@ -1,0 +1,1 @@
+export const WEBSITE_ADDRESS = 'http://localhost:5173';
