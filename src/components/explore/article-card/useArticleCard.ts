@@ -1,12 +1,13 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
-export default function useArticleCard( type : string, title : string, article : boolean ) {
+export default function useArticleCard( relativePath : string ) {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    const prePath = ( type : string ) => `/${type}/${title.replace(/\s+/g, '-').toLocaleLowerCase()}`;
-    if ( !article ) navigate( prePath( type ) );
-    else navigate( prePath( 'article' ) );
+    const prePath = ( relativePath: string) => {
+      return `/learn/${ relativePath.replace(/\s+/g, '-').toLocaleLowerCase() }`;
+    }
+    navigate( prePath( relativePath ) );
   }
 
   return {
