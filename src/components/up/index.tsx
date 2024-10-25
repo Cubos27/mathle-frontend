@@ -1,7 +1,7 @@
 import useUp from './useUp';
 
-import up from '../../assets/icons/up-arrow.svg'
 import styles from './up.module.css';
+import { upArrowIcon } from '../../assets';
 
 export default function Up() {
   const { buttonDisplay, scrollUp } = useUp();
@@ -12,7 +12,7 @@ export default function Up() {
       className={ `${ styles[`up`] } ${ buttonDisplay ? styles[`up--displayed`] : styles[`up--hidden`] }`  } 
       onClick={ scrollUp } 
       >
-      <img className={ styles[`up__icon`] } src={ up } alt={ ALT_TEXT } />
+      <img className={ styles[`up__icon`] } src={ upArrowIcon } alt={ ALT_TEXT } />
     </button>
   )
 }

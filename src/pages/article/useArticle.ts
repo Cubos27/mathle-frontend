@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
 
 export default function useArticle() {
-  const { name } = useParams();
+  const { subtopic, topic } = useParams();
 
   return {
-    name
+    name : subtopic || topic,
   }
 }

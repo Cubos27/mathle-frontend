@@ -54,3 +54,38 @@ h2 {
   line-height: 1.2;
   font-weight: normal;
 }
+
+p, pre {
+  font-size: clamp(1em, 2vw, 1.2em);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: inherit;
+  font-family: inherit;
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  position: relative;
+}
+
+a:hover {
+  color: var(--tertiary-color);
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  height: 1px;
+  width: 0;
+  display: block;
+  margin-left: 0.5rem;
+  font-size: 0.8em;
+  color: var(--tertiary-color);
+  transition: width 0.3s ease-in-out;
+}
+
+a:hover::after {
+  width: 100%;
+}
