@@ -1,14 +1,14 @@
 import useArticle from "./useArticle"
 
-import Layout from "../layout"
+import LearningLayout from "../LearningLayout";
 
 export default function Article() {
   const { name } = useArticle();
   return (
-    <Layout>
+    <LearningLayout>
       <article>
         <h2>{ name }</h2>
       </article>
-    </Layout>
+    </LearningLayout>
   )
 }

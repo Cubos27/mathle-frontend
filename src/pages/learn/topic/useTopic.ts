@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import dummyArticles from "../../logic/dummies/dummy_articles"
-import { Article } from "../../logic/types/TArticle";
+import dummyArticles from "../../../logic/dummies/dummy_articles"
+import { TArticle } from "../../../logic/types/TArticle";
 
 
 export default function useTopic() {
-  const [ topicData, setTopicData ] = useState<Article | undefined>( undefined );
+  const [ topicData, setTopicData ] = useState<TArticle | undefined>( undefined );
   const [ subtopics, setSubtopics ] = useState<object>( [] );
   const { topic } = useParams();
 
@@ -17,7 +17,7 @@ export default function useTopic() {
 
   useEffect(() => {
     if (topicData) {
-      const subtopics = dummyArticles.map( (subtopic : Article) => subtopic.parent_id === topicData.id_article ? subtopic.title : '' );
+      const subtopics = dummyArticles.map( (subtopic : TArticle) => subtopic.parent_id === topicData.id_article ? subtopic.title : '' );
       const filteredSubtopics = subtopics.filter( (subtopic : string) => subtopic !== '' );
 
       setSubtopics( filteredSubtopics );

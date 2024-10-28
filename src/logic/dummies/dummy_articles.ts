@@ -1,6 +1,6 @@
-import { Article } from "../types/TArticle";
+import { TArticle } from "../types/TArticle";
 
-const dummyArticles: Article[] = [
+const dummyArticles: TArticle[] = [
   {
     id_article: 1,
     title: 'Introduction to Algebra',
@@ -37,6 +37,62 @@ const dummyArticles: Article[] = [
     parent_type: 'subject',
     description: 'An examination of differential equations and methods for solving them.'
   },
+
+  {
+    id_article: 50,
+    title: 'Traka 1',
+    img_cover: 'traka.jpg',
+    type: 'topic',
+    total_score: 80,
+    parent_id: 2,
+    prev_article: 4,
+    parent_type: 'subject',
+    description: 'An examination of differential equations and methods for solving them.'
+  },
+  {
+    id_article: 51,
+    title: 'Traka 2',
+    img_cover: 'traka.jpg',
+    type: 'topic',
+    total_score: 80,
+    parent_id: 2,
+    prev_article: 4,
+    parent_type: 'subject',
+    description: 'An examination of differential equations and methods for solving them.'
+  },
+  {
+    id_article: 52,
+    title: 'Traka 3',
+    img_cover: 'traka.jpg',
+    type: 'topic',
+    total_score: 80,
+    parent_id: 2,
+    prev_article: 4,
+    parent_type: 'subject',
+    description: 'An examination of differential equations and methods for solving them.'
+  },
+  {
+    id_article: 53,
+    title: 'Traka 4',
+    img_cover: 'traka.jpg',
+    type: 'topic',
+    total_score: 80,
+    parent_id: 2,
+    prev_article: 50,
+    parent_type: 'subject',
+    description: 'An examination of differential equations and methods for solving them.'
+  },
+  {
+    id_article: 54,
+    title: 'Traka 5',
+    img_cover: 'traka.jpg',
+    type: 'topic',
+    total_score: 80,
+    parent_id: 2,
+    parent_type: 'subject',
+    description: 'An examination of differential equations and methods for solving them.'
+  },
+
   {
     id_article: 5,
     title: 'Quadratic Equations',

@@ -1,4 +1,4 @@
-export type Article = {
+export type TArticle = {
   id_article: number,
   title: string,
   img_cover: string,

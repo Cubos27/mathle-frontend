@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 
-import dummyArticles from "../../logic/dummies/dummy_articles"
-import { Article } from "../../logic/types/TArticle";
+import dummyArticles from "../../../logic/dummies/dummy_articles"
+import { TArticle } from "../../../logic/types/TArticle";
 
 export default function useExplore() {
   const [ articles, setArticles ] = useState( dummyArticles );
   const [ articlesJoined, setArticlesJoined ] = useState( [] );
   
-  const getArticle = ( id_article : number ) => articles.find( (article : Article) => article.id_article === id_article );
+  const getArticle = ( id_article : number ) => articles.find( (article : TArticle) => article.id_article === id_article );
 
-  const getRelativePath = ( article : Article ) => {
+  const getRelativePath = ( article : TArticle ) => {
     if ( article.type === 'subject' ) return article.title;
 
     if ( article.type === 'topic' ) {
@@ -25,7 +25,7 @@ export default function useExplore() {
   }
 
   useEffect(() => {
-    const articlesJoined = articles.map( (article : Article) => ({ 
+    const articlesJoined = articles.map( (article : TArticle) => ({ 
       ...article, 
       relativePath: getRelativePath( article )
     }));

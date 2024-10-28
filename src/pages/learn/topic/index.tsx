@@ -2,11 +2,11 @@ import useTopic from './useTopic';
 
 import { Link } from 'react-router-dom';
 import styles from './topic.module.css';
-import { onErrorImageFunction } from '../../assets';
+import { onErrorImageFunction } from '../../../assets';
 
-import Layout from '../layout';
+import LearningLayout from '../LearningLayout';
 import Article from '../article';
-import Navigation from '../../components/learn/navigation';
+import Navigation from '../../../components/learn/navigation';
 
 export default function Topic() {
   const { topic, subtopics } = useTopic();
@@ -14,9 +14,8 @@ export default function Topic() {
   if ( topic?.article ) return <Article />;
 
   return (
-    <Layout>
+    <LearningLayout>
       <article className={ styles[`topic`] }>
-        <Navigation />
         <figure className={ styles[`topic__figure`] }>
           <img 
             className={ styles[`topic__image`] }
@@ -43,6 +42,6 @@ export default function Topic() {
           </ul>
         </section>
       </article>
-    </Layout>
+    </LearningLayout>
   )
 }

@@ -1,10 +1,10 @@
 import useExplore from './useExplore';
 
 import styles from './explore.module.css';
-import Layout from '../layout';
+import Layout from '../../layout';
 
-import ArticleCard from '../../components/explore/article-card';
-import SearchBar from '../../components/explore/search-bar';
+import ArticleCard from '../../../components/explore/article-card';
+import SearchBar from '../../../components/explore/search-bar';
 
 export default function Explore() {
   const { articles } = useExplore();
