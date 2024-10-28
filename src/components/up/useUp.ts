@@ -6,7 +6,7 @@ export default function useUp() {
   const hasScrolledEnough = () => {// 75% of the height of the window
     const percentage = 0.75;
     const scrollPosition = window.scrollY + window.innerHeight;
-    const threshold = document.documentElement.scrollHeight * percentage;
+    const threshold = screen.height * percentage;
 
     return scrollPosition >= threshold;
   };
