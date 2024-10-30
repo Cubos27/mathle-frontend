@@ -55,6 +55,16 @@ h2 {
   font-weight: normal;
 }
 
+h3 {
+  font-size: clamp(1.6em, 3vw, 2.4em);
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: clamp(1.4em, 2.5vw, 2em);
+  line-height: 1.4;
+}
+
 p, pre {
   font-size: clamp(1em, 2vw, 1.2em);
   line-height: 1.5;

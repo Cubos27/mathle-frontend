@@ -6,6 +6,8 @@ import Subject from './pages/learn/subject';
 import Topic from './pages/learn/topic';
 import Article from './pages/learn/article';
 
+import Editor from './pages/admin/editor';
+
 const App = () => {
   return (
     <Router>
@@ -16,8 +18,7 @@ const App = () => {
         <Route path='learn/:subject/:topic' element={<Topic />} />
         <Route path='learn/:subject/:topic/:subtopic' element={<Article />} />
 
-        {/**TODO: implement it to be subject/topic or subject/topic/subtopic */}
-        <Route path='learn/:name' element={<Article />} />
+        <Route path='admin/editor' element={<Editor />} />
       </Routes>
     </Router>
   )
