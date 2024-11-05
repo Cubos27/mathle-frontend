@@ -7,7 +7,7 @@ import ArticleCard from '../../../components/explore/article-card';
 import SearchBar from '../../../components/explore/search-bar';
 
 export default function Explore() {
-  const { articles } = useExplore();
+  const { articles, loading } = useExplore();
 
   return (
     <Layout>
@@ -18,10 +18,12 @@ export default function Explore() {
       <section className={ styles[`explore__articles`] }>
         { articles.map((article) => (
           <ArticleCard 
-            key={ article.id_article } 
+            key={ article.ID_Article } 
             { ...article }
           />
         )) }
+        { loading && <p>Loading...</p> }
+        { !loading && !articles.length && <p>No articles found</p> }
       </section>
       
     </Layout>

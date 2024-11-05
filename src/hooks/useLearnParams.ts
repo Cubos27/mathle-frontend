@@ -13,7 +13,7 @@ export default function useLearnParams() {
 
     items.forEach( (item : string | undefined, index: number ) => {
       if (item) {
-        const formatedItem = item.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const formatedItem = item.split(':')[1].replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
         const previousLink = linksToSet[ index - 1 ] ? linksToSet[ index - 1 ].link + '/' : '';
 
         linksToSet.push({

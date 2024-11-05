@@ -1,27 +1,40 @@
 import { useState, useEffect } from "react";
 
-import dummyArticles from "../../../logic/dummies/dummy_articles"
+import fetchData from "../../../logic/utils/fetch";
 import { TArticle } from "../../../logic/types/TArticle";
 
 export default function useExplore() {
-  const [ articles, setArticles ] = useState( dummyArticles );
-  const [ articlesJoined, setArticlesJoined ] = useState( [] );
+  const [ articles, setArticles ] = useState( [] );
+  const [ articlesJoined, setArticlesJoined ] = useState<Array<TArticle & { relativePath?: string }>>([]);
+  const [ loading, setLoading ] = useState( true );
   
-  const getArticle = ( id_article : number ) => articles.find( (article : TArticle) => article.id_article === id_article );
+  const getArticle = ( id_article : number ) => articles.find( (article : TArticle) => article.ID_Article === id_article );
 
   const getRelativePath = ( article : TArticle ) => {
-    if ( article.type === 'subject' ) return article.title;
+    let relativePath = `${ article.ID_Article }:${ article.title }`;
+    if ( article.type === 1 ) return relativePath;
 
-    if ( article.type === 'topic' ) {
-      const parent = getArticle(article.parent_id);
-      return `${ parent.title }/${article.title }`;
+    if ( article.type === 2 && article.ID_Parent ) {
+      const parent = getArticle( article.ID_Parent );
+      relativePath = `${ parent.ID_Article }:${ parent.title }/${ relativePath }`;
+      return relativePath;
     }
 
-    if ( article.type === 'subtopic' ) {
-      const parent = getArticle( article.parent_id );
-      const grandParent = getArticle( parent.parent_id );
-      return `${ grandParent.title }/${ parent.title }/${ article.title }`;
+    if ( article.type === 3 && article.ID_Parent ) {
+      const parent = getArticle( article.ID_Parent );
+      relativePath = `${ parent.ID_Article }:${ parent.title }/${ relativePath }`;
+
+      const grandParent = getArticle( parent.ID_Parent );
+      relativePath = `${ grandParent.ID_Article }:${ grandParent.title }/${ relativePath }`;
+      
+      return relativePath;
     }
+  }
+
+  const fetchArticles = async () => {
+    const response = await fetchData( 'explore', 'GET' );
+    if ( response ) setArticles( response.data );
+    else setLoading( false );
   }
 
   useEffect(() => {
@@ -30,13 +43,15 @@ export default function useExplore() {
       relativePath: getRelativePath( article )
     }));
     setArticlesJoined( articlesJoined );
+    setLoading( false );
   }, [articles]);
 
   useEffect(() => {
-    setArticles( dummyArticles );
+    fetchArticles();
   }, []);
 
   return {
-    articles : articlesJoined
+    articles : articlesJoined,
+    loading
   }
 }

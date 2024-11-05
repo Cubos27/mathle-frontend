@@ -6,16 +6,16 @@ import styles from './article-card.module.css';
 import MainButton from '../../main-button';
 
 interface ArticleProps {
-  id_article: number;
+  ID_Article?: number;
   img_cover: string;
   title: string;
-  type: 'subject' | 'topic' | 'subtopic';
+  type: number//'subject' | 'topic' | 'subtopic';
   article?: boolean;
   relativePath: string;
 }
 
 export default function Article({ img_cover, title, type, relativePath } : ArticleProps) {
-  const { handleNavigation } = useArticleCard( relativePath );
+  const { handleNavigation, materialName } = useArticleCard( relativePath, type );
 
   return (
     <article className={ styles[`article-card`] }>
@@ -31,7 +31,7 @@ export default function Article({ img_cover, title, type, relativePath } : Artic
       <section className={ styles[`article-card__content`] }>
         <section className={ styles[`article-card__description`] }>
           <h3 className={ styles[`article-card__title`] }>{ title }</h3>
-          <p className={ styles[`article-card__type`] }>Material: { type }</p>
+          <p className={ styles[`article-card__type`] }>Material: { materialName }</p>
         </section>
 
         <section className={ styles[`article-card__actions`] }>

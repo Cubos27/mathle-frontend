@@ -11,7 +11,7 @@ export default function useRoadmap(links : TOrderedLink[]) {
 
     links.forEach( link => {
       // If the link doesn't have a previous article, it's one of the first ones
-      if ( !link.prev_article ) {
+      if ( !link.ID_Prev_Article ) {
         if ( !localLinks[ FIRST_INDEX ] ) localLinks.push([]);
         localLinks[ FIRST_INDEX ].push( link );
       }
@@ -20,8 +20,8 @@ export default function useRoadmap(links : TOrderedLink[]) {
         If the link has a previous article, we need to find the index of the group that has the previous article
         If it doesn't exist, we create a new group
       */
-      if ( link.prev_article ) {
-        const index = localLinks.findIndex( localLink => localLink[0].prev_article === link.prev_article );
+      if ( link.ID_Prev_Article ) {
+        const index = localLinks.findIndex( localLink => localLink[0].ID_Prev_Article === link.ID_Prev_Article );
         if ( index === -1 ) localLinks.push([]);
         const indexToInsert = index === -1 ? localLinks.length - 1 : index;
         localLinks[ indexToInsert ].push(link);

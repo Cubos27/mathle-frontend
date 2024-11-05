@@ -1,12 +1,12 @@
 export type TArticle = {
-  id_article: number,
+  ID_Article: number,
   title: string,
   img_cover: string,
-  type: 'subject' | 'topic' | 'subtopic',
-  article?: boolean
-  prev_article?: number,
-  total_score: number,
-  parent_id?: number,
+  type: number,//'subject' | 'topic' | 'subtopic',
+  has_content?: boolean
+  ID_Prev_Article?: number,
+  score: number,
+  ID_Parent?: number,
   parent_type?: 'subject' | 'topic' | 'subtopic',
   description?: string
 }

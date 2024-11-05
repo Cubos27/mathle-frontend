@@ -30,17 +30,19 @@ export default function Topic() {
           <pre>{ topic?.description }</pre>
         </section>
 
-        <section className={ styles[`topic__subtopics-show`] }>
-          <h3>Suptopics</h3>
-          <ul className={ styles[`topic__subtopics`] }>
-            {
-              subtopics.map( (subtopic, index) => {
-                const formatedSubtopic = subtopic.replace(/\s+/g, '-').toLocaleLowerCase();
-                return ( <li> <Link to={ formatedSubtopic } key={ index }>{ subtopic }</Link> </li> )
-              })
-            }
-          </ul>
-        </section>
+          { subtopics?.length > 0 &&
+            <section className={ styles[`topic__subtopics-show`] }>
+              <h3>Suptopics</h3>
+              <ul className={ styles[`topic__subtopics`] }>
+                {
+                  subtopics.map( (subtopic, index) => {
+                    const formatedSubtopic = subtopic.replace(/\s+/g, '-').toLocaleLowerCase();
+                    return ( <li> <Link to={ formatedSubtopic } key={ index }>{ subtopic }</Link> </li> )
+                  })
+                }
+              </ul>
+            </section>
+        }
       </article>
     </LearningLayout>
   )

@@ -15,7 +15,7 @@ export default function Roadmap({ links } : { links : TOrderedLink[] }) {
             {
               group.map((link) => (
                 <TopicCard 
-                  key={ link.toDisplay }
+                  key={ link.ID_Article }
                   { ...link }
                 />
               ))

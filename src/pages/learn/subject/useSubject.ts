@@ -1,43 +1,50 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react";
 
-import { TArticle } from "../../../logic/types/TArticle";
 import { TOrderedLink } from "../../../logic/types/TOrderedLink";
 
-import dummyArticles from "../../../logic/dummies/dummy_articles";
+import fetchData from "../../../logic/utils/fetch";
 
 export default function useSubject() {
-  const [ subject, setSubject ] = useState<TArticle>();
+  const [ subjectName, setSubjectName ] = useState<string>();
+  const [ idSubject, setIdSubject ] = useState<number>(0);
+  const [ preLinks, setPreLinks ] = useState<any>([]);
   const [ links, setLinks ] = useState<TOrderedLink[]>([]);
   const { subject : subjectParam } = useParams<{ subject: string }>();
 
   useEffect(() => {
     if ( subjectParam ) {
-      const titleFormatted = ( title : string ) => title.replace(/\s+/g, '-').toLocaleLowerCase();
-      const localSubject = dummyArticles.find( article => titleFormatted(article.title) === subjectParam );
-      if ( localSubject ) setSubject( localSubject );
+      const [ id, subjectName ]= subjectParam.split(':');
+      if ( parseInt( id ) !== 0 ) setIdSubject( parseInt( id ) );
+      if ( subjectName ) setSubjectName( subjectName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) );
     }
   }, [subjectParam]);
 
+  const fetchSubject = async () => {
+    const data = await fetchData(`subject/${ idSubject }`, 'GET');
+    setPreLinks( data?.data );
+  }
+
   useEffect(() => {
-    if ( subject ) {
-      const localLinks = dummyArticles.filter( article => article.parent_id === subject.id_article );
-      if ( localLinks ) {
-        const formattedLinks = localLinks.map( link => {
-          return {
-            id_article: link.id_article,
-            toDisplay: link.title,
-            link: `/learn/${ subjectParam }/${ link.title }`.replace(/\s+/g, '-').toLocaleLowerCase(),
-            prev_article: link.prev_article,
-          }
-        });
-        setLinks(formattedLinks);
-      }
+    if ( idSubject ) fetchSubject();
+  }, [idSubject]);
+
+  useEffect(() => {
+    if ( idSubject && preLinks ) {
+      const formattedLinks = preLinks.map( link => {
+        return {
+          ID_Article: link.ID_Article,
+          toDisplay: link.title,
+          link: `/learn/${ subjectParam }/${ link.ID_Article }:${ link.title }`.replace(/\s+/g, '-').toLocaleLowerCase(),
+          ID_Prev_Article: link.ID_Prev_Article,
+        }
+      });
+      setLinks( formattedLinks );
     }
-  }, [subject]);
+  }, [ idSubject, preLinks ]);
 
   return {
-    subject,
+    subjectName,
     links
   }
 }
