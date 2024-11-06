@@ -6,6 +6,7 @@ import Subject from './pages/learn/subject';
 import Topic from './pages/learn/topic';
 import Article from './pages/learn/article';
 
+import ArticleDashboard from './pages/admin/article-dashboard';
 import Editor from './pages/admin/editor';
 
 const App = () => {
@@ -18,7 +19,9 @@ const App = () => {
         <Route path='learn/:subject/:topic' element={<Topic />} />
         <Route path='learn/:subject/:topic/:subtopic' element={<Article />} />
 
+        <Route path='admin/articles' element={<ArticleDashboard />} />
         <Route path='admin/editor' element={<Editor />} />
+        <Route path='admin/editor/:subject' element={<Editor />} />
       </Routes>
     </Router>
   )

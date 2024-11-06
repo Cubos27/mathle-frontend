@@ -6,12 +6,11 @@ import { onErrorImageFunction } from '../../../assets';
 
 import LearningLayout from '../LearningLayout';
 import Article from '../article';
-import Navigation from '../../../components/learn/navigation';
 
 export default function Topic() {
   const { topic, subtopics } = useTopic();
 
-  if ( topic?.article ) return <Article />;
+  if ( topic?.has_content ) return <Article />;
 
   return (
     <LearningLayout>
@@ -36,8 +35,7 @@ export default function Topic() {
               <ul className={ styles[`topic__subtopics`] }>
                 {
                   subtopics.map( (subtopic, index) => {
-                    const formatedSubtopic = subtopic.replace(/\s+/g, '-').toLocaleLowerCase();
-                    return ( <li> <Link to={ formatedSubtopic } key={ index }>{ subtopic }</Link> </li> )
+                    return ( <li> <Link to={ subtopic.link } key={ index }>{ subtopic.title }</Link> </li> )
                   })
                 }
               </ul>

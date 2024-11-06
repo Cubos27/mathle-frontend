@@ -1,28 +1,40 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import dummyArticles from "../../../logic/dummies/dummy_articles"
+import fetchData from "../../../logic/utils/fetch";
 import { TArticle } from "../../../logic/types/TArticle";
 
 
 export default function useTopic() {
   const [ topicData, setTopicData ] = useState<TArticle | undefined>( undefined );
   const [ subtopics, setSubtopics ] = useState<object>( [] );
-  const { topic } = useParams();
+  const { topic : topicParam, subject } = useParams();
 
-  useEffect(() => {
-    const topicInfo = dummyArticles.find(article => article.title.replace(/\s+/g, '-').toLocaleLowerCase() === topic);
-    setTopicData( topicInfo );
-  }, [topic]);
-
-  useEffect(() => {
-    if (topicData) {
-      const subtopics = dummyArticles.map( (subtopic : TArticle) => subtopic.parent_id === topicData.id_article ? subtopic.title : '' );
-      const filteredSubtopics = subtopics.filter( (subtopic : string) => subtopic !== '' );
-
-      setSubtopics( filteredSubtopics );
+  const fetchTopic = async ( id : string ) => {
+    const res = await fetchData( `topic/${id}` );
+    if ( res?.status === 200 ) {
+      setTopicData( res.data.topic );
+      const formattedSubtopics = formatSubtopics( res.data.subtopics );
+      setSubtopics( formattedSubtopics );
     }
-  }, [topicData]);
+  }
+
+  const formatSubtopics = ( subtopics : any ) => {
+    return subtopics.map( (subtopic : any) => {
+      return {
+        title: subtopic.title,
+        link: `/learn/${ subject }/${ topicParam }/${ subtopic.ID_Article }:${ subtopic.title }`.replace(/\s+/g, '-').toLocaleLowerCase()
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (topicParam) {
+      const id = topicParam.split(':')[0];
+
+      if ( id ) fetchTopic( id );
+    }
+  }, [topicParam]);
 
   return {
     topic : topicData,
