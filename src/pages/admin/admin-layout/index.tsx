@@ -1,5 +1,7 @@
 import { Fragment } from "react/jsx-runtime"
 
+import Up from "../../../components/up"
+
 interface IAdminLayoutProps {
   children: React.ReactNode,
   props?: any
@@ -14,6 +16,7 @@ export default function AdminLayout({ children, ...props } : IAdminLayoutProps) 
       <main>
         { children }
       </main>
+      <Up />
     </Fragment>
   )
 }

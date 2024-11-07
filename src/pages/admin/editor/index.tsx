@@ -2,6 +2,7 @@ import useEditor from "./useEditor";
 
 import styles from "./editor.module.css"
 import AdminLayout from "../admin-layout"
+import MainButton from "../../../components/main-button";
 
 import {
   TITLE_LABEL,
@@ -10,9 +11,9 @@ import {
   TYPE_LABEL,
   TYPE_NAME,
   TYPE_TITLE,
-  IS_ARTICLE_LABEL,
-  IS_ARTICLE_NAME,
-  IS_ARTICLE_TITLE,
+  HAS_CONTENT_LABEL,
+  HAS_CONTENT_NAME,
+  HAS_CONTENT_TITLE,
   IMAGE_COVER_LABEL,
   IMAGE_COVER_NAME,
   IMAGE_COVER_TITLE,
@@ -27,7 +28,6 @@ import {
   PARENT_ID_TITLE,
   PARENT_TYPE_LABEL,
   PARENT_TYPE_NAME,
-  PARENT_TYPE_TITLE,
   PREVIOUS_ARTICLE_ID_LABEL,
   PREVIOUS_ARTICLE_ID_NAME,
   PREVIOUS_ARTICLE_ID_TITLE,
@@ -40,24 +40,34 @@ import {
 export default function Editor() {
   const {
     isSaving,
-    isArticle,
+    saved,
+    hasContent,
     type,
+    parentType,
+    description,
+    title,
+    imageCover,
+    content,
+    totalScore,
+    parent,
+    previousArticle,
+
+    onSubmit,
 
     setTitle,
     setType,
-    setIsArticle,
+    setHasContent,
     setImageCover,
     setTotalScore,
     setDescription,
     setParent,
-    setParentType,
     setPreviousArticle,
     setContent
   } = useEditor();
   return (
     <AdminLayout>
       <h2 className={ styles[`editor__title`] }>Editor</h2>
-      <form action="" className={ styles[`editor__form`] }>
+      <form action="" className={ styles[`editor__form`] } onSubmit={ onSubmit }>
         <section className={ styles[`editor__this-article`] }>
           <h4>This Article</h4>
 
@@ -69,6 +79,7 @@ export default function Editor() {
               title={ TITLE_TITLE }
               required
               onChange={ setTitle }
+              value={ title }
             />
           </section>
 
@@ -80,22 +91,26 @@ export default function Editor() {
               required
               onChange={ setType }
               >
-              <option value="1">Subject</option>
-              <option value="2">Topic</option>
-              <option value="3">Subtopic</option>
+              <option value="1" selected={ type === 1 }>Subject</option>
+              <option value="2" selected={ type === 2 }>Topic</option>
+              <option value="3" selected={ type === 3 }>Subtopic</option>
             </select>
           </section>
           
-          { /* TODO: When the checkbox is checked to be off, is not being reflected */ }  
-          <section className={ styles[`editor__input-container`] }>
-            <label htmlFor={ IS_ARTICLE_NAME }>{ IS_ARTICLE_LABEL }</label>
-            <input 
-              name={ IS_ARTICLE_NAME } 
-              type="checkbox" 
-              title={ IS_ARTICLE_TITLE }
-              onChange={ setIsArticle }
-            />
-          </section>
+          { /* Only show this if the type is not a subject */
+            type > 1 && (
+            <section className={ styles[`editor__input-container`] }>
+              <label htmlFor={ HAS_CONTENT_NAME } title={ HAS_CONTENT_TITLE }>{ HAS_CONTENT_LABEL }</label>
+              <input 
+                name={ HAS_CONTENT_NAME } 
+                type="checkbox" 
+                title={ HAS_CONTENT_TITLE }
+                onChange={ setHasContent }
+              />
+            </section>
+            )
+          }  
+          
 
           <section className={ styles[`editor__input-container`] }>
             <label htmlFor={ IMAGE_COVER_NAME }>{ IMAGE_COVER_LABEL }</label>
@@ -104,6 +119,7 @@ export default function Editor() {
               type="text" 
               title={ IMAGE_COVER_TITLE }
               onChange={ setImageCover }
+              value={ imageCover }
             />
           </section>
 
@@ -115,6 +131,7 @@ export default function Editor() {
               title={ TOTAL_SCORE_TITLE }
               required
               onChange={ setTotalScore }
+              value={ totalScore }
             />
           </section>
 
@@ -125,56 +142,53 @@ export default function Editor() {
               title={ DESCRIPTION_TITLE }
               required
               onChange={ setDescription }
+              value={ description }
             ></textarea>
           </section>
         </section>
 
-        <section className={ styles[`editor__related-articles`] }>
-          <h4>Related Articles</h4>
+        { /* Only show this if the type is not a subject */
+            type > 1 &&
+          <section className={ styles[`editor__related-articles`] }>
+            <h4>Related Articles</h4>
 
-          {
-            type > 1 && <>
-              <section className={ styles[`editor__input-container`] }>
-                <label htmlFor={ PARENT_ID_NAME }>{ PARENT_ID_LABEL }</label>
-                <input 
-                  name={ PARENT_ID_NAME } 
-                  type="number" 
-                  title={ PARENT_ID_TITLE } 
-                  required
-                  onChange={ setParent }
-                />
-              </section>
+            <section className={ styles[`editor__input-container`] }>
+              <label htmlFor={ PARENT_ID_NAME }>{ PARENT_ID_LABEL }</label>
+              <input 
+                name={ PARENT_ID_NAME } 
+                type="number" 
+                title={ PARENT_ID_TITLE } 
+                required
+                onChange={ setParent }
+                value={ parent }
+              />
+            </section>
               
-              <section className={ styles[`editor__input-container`] }>
-                <label htmlFor={ PARENT_TYPE_NAME }>{ PARENT_TYPE_LABEL }</label>
-                <select 
-                  name={ PARENT_TYPE_NAME } 
-                  title={ PARENT_TYPE_TITLE }
-                  required
-                  onChange={ setParentType }
-                  >
-                  <option value="1">Subject</option>
-                  <option value="2">Topic</option>
-                  <option value="3">Subtopic</option>
-                </select>
-              </section>
-            </>
-          }
+            <div className={ styles[`editor__input-container`] }>
+              <label htmlFor={ PARENT_TYPE_NAME }>{ PARENT_TYPE_LABEL }:</label>
+              <p>
+                {
+                  parentType === 1 ? "Subject" : "Topic"
+                }
+              </p>
+            </div>
 
-          <section className={ styles[`editor__input-container`] }>
-            <label htmlFor={ PREVIOUS_ARTICLE_ID_NAME }>{ PREVIOUS_ARTICLE_ID_LABEL }</label>
-            <input 
-              type="number"
-              name={ PREVIOUS_ARTICLE_ID_NAME }
-              title={ PREVIOUS_ARTICLE_ID_TITLE }
-              onChange={ setPreviousArticle }
-            />
+            <section className={ styles[`editor__input-container`] }>
+              <label htmlFor={ PREVIOUS_ARTICLE_ID_NAME }>{ PREVIOUS_ARTICLE_ID_LABEL }</label>
+              <input 
+                type="number"
+                name={ PREVIOUS_ARTICLE_ID_NAME }
+                title={ PREVIOUS_ARTICLE_ID_TITLE }
+                onChange={ setPreviousArticle }
+                value={ previousArticle }
+              />
+            </section>
+
           </section>
+        }
 
-        </section>
-
-        {
-          isArticle && <>
+        { /** Shows if the topic has content or if the article is type subtopic */
+          ( hasContent || type > 2 ) && <>
             <section className={ styles[`editor__content`] }>
               <h4>Content</h4>
               <section className={ `${ styles[`editor__content`] } ${ styles[`.editor__input-container--textarea`]}`}>
@@ -184,6 +198,7 @@ export default function Editor() {
                   title={ CONTENT_TITLE } 
                   required
                   onChange={ setContent }
+                  value={ content }
                 ></textarea>
               </section>
             </section>
@@ -191,7 +206,11 @@ export default function Editor() {
         }
 
         <section>
-          <button>{ SAVE_BUTTON }</button>
+          <MainButton 
+            type="submit"
+          >
+            { SAVE_BUTTON }
+          </MainButton>
         </section>
       </form>
     </AdminLayout>
