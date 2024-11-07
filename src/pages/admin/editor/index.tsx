@@ -2,6 +2,7 @@ import useEditor from "./useEditor";
 
 import styles from "./editor.module.css"
 import AdminLayout from "../admin-layout"
+import MainButton from "../../../components/main-button";
 
 import {
   TITLE_LABEL,
@@ -27,7 +28,6 @@ import {
   PARENT_ID_TITLE,
   PARENT_TYPE_LABEL,
   PARENT_TYPE_NAME,
-  PARENT_TYPE_TITLE,
   PREVIOUS_ARTICLE_ID_LABEL,
   PREVIOUS_ARTICLE_ID_NAME,
   PREVIOUS_ARTICLE_ID_TITLE,
@@ -40,6 +40,7 @@ import {
 export default function Editor() {
   const {
     isSaving,
+    saved,
     hasContent,
     type,
     parentType,
@@ -47,6 +48,11 @@ export default function Editor() {
     title,
     imageCover,
     content,
+    totalScore,
+    parent,
+    previousArticle,
+
+    onSubmit,
 
     setTitle,
     setType,
@@ -61,7 +67,7 @@ export default function Editor() {
   return (
     <AdminLayout>
       <h2 className={ styles[`editor__title`] }>Editor</h2>
-      <form action="" className={ styles[`editor__form`] }>
+      <form action="" className={ styles[`editor__form`] } onSubmit={ onSubmit }>
         <section className={ styles[`editor__this-article`] }>
           <h4>This Article</h4>
 
@@ -85,16 +91,16 @@ export default function Editor() {
               required
               onChange={ setType }
               >
-              <option value="1">Subject</option>
-              <option value="2">Topic</option>
-              <option value="3">Subtopic</option>
+              <option value="1" selected={ type === 1 }>Subject</option>
+              <option value="2" selected={ type === 2 }>Topic</option>
+              <option value="3" selected={ type === 3 }>Subtopic</option>
             </select>
           </section>
           
           { /* Only show this if the type is not a subject */
             type > 1 && (
             <section className={ styles[`editor__input-container`] }>
-              <label htmlFor={ HAS_CONTENT_NAME }>{ HAS_CONTENT_LABEL }</label>
+              <label htmlFor={ HAS_CONTENT_NAME } title={ HAS_CONTENT_TITLE }>{ HAS_CONTENT_LABEL }</label>
               <input 
                 name={ HAS_CONTENT_NAME } 
                 type="checkbox" 
@@ -125,6 +131,7 @@ export default function Editor() {
               title={ TOTAL_SCORE_TITLE }
               required
               onChange={ setTotalScore }
+              value={ totalScore }
             />
           </section>
 
@@ -153,6 +160,7 @@ export default function Editor() {
                 title={ PARENT_ID_TITLE } 
                 required
                 onChange={ setParent }
+                value={ parent }
               />
             </section>
               
@@ -172,6 +180,7 @@ export default function Editor() {
                 name={ PREVIOUS_ARTICLE_ID_NAME }
                 title={ PREVIOUS_ARTICLE_ID_TITLE }
                 onChange={ setPreviousArticle }
+                value={ previousArticle }
               />
             </section>
 
@@ -197,7 +206,11 @@ export default function Editor() {
         }
 
         <section>
-          <button>{ SAVE_BUTTON }</button>
+          <MainButton 
+            type="submit"
+          >
+            { SAVE_BUTTON }
+          </MainButton>
         </section>
       </form>
     </AdminLayout>

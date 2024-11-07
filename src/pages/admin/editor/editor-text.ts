@@ -8,7 +8,7 @@ export const TYPE_TITLE = "Type is required";
 
 export const HAS_CONTENT_LABEL = "Has content?";
 export const HAS_CONTENT_NAME = "editor--has-content";
-export const HAS_CONTENT_TITLE = "Has content?";
+export const HAS_CONTENT_TITLE = "If it's a subtopic, it always has content, but don't worry, the system will handle it";
 
 export const IMAGE_COVER_LABEL = "Image cover";
 export const IMAGE_COVER_NAME = "editor--image-cover";

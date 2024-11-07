@@ -1,6 +1,11 @@
-import { useState, useEffect, ChangeEventHandler } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import fetchData from "../../../logic/utils/fetch";
 
 export default function useEditor() {
+  const { id } = useParams<{ id: string }>();
+
   const [ title, setTitle ] = useState('');
   const [ type, setType ] = useState(1);
   const [ hasContent, setHasContent ] = useState(false);
@@ -15,6 +20,7 @@ export default function useEditor() {
   const [ content, setContent ] = useState('');
 
   const [ isSaving, setIsSaving ] = useState(false);
+  const [ saved, setSaved ] = useState(false);
 
   const handleHasContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHasContent(event.target.checked);
@@ -23,8 +29,6 @@ export default function useEditor() {
   const handleTextChange = ( setValue : Function ) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = event.target.value;
     const formattedText = handleAutoComplete( inputText );
-
-    console.log( formattedText );
     setValue( formattedText );
   }
 
@@ -62,6 +66,29 @@ export default function useEditor() {
     setValue( event.target.value );
   }
 
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSaving(true);
+
+    const data = {
+      title,
+      type,
+      hasContent : type === 3 || hasContent,// if type is subtopic, then hasContent must be true, else use the value of hasContent
+      imageCover,
+      totalScore,
+      description,
+      parent : parent === 0 ? null : parent,
+      parentType : parentType === 0 ? null : parentType,
+      previousArticle : previousArticle === 0 ? null : previousArticle,
+      content
+    }
+
+    const url = id ? `admin/editor/${id}` : 'admin/editor';
+    const response = await fetchData( url , 'POST', data );
+    setIsSaving(false);
+    setSaved( response?.status === 200 );
+  }
+
   useEffect(() => {
     /*
      * if type is 2 (topic), then parentType must be 1
@@ -70,8 +97,31 @@ export default function useEditor() {
     setParentType( type - 1 );
   }, [ type ]);
 
+  useEffect(() => {
+    if (id) {
+      const fetchArticle = async () => {
+        const response = await fetchData(`admin/editor/${id}`);
+        if ( response && !(response.status === 200) ) return;
+        
+        setTitle( response?.data.title );
+        setType( response?.data.type );
+        setHasContent( response?.data.has_content );
+        setImageCover( response?.data.img_cover );
+        setTotalScore( response?.data.score );
+        setDescription( response?.data.description );
+        setParent( response?.data.ID_Parent );
+        setParentType( response?.data.parent_type );
+        setPreviousArticle( response?.data.ID_Prev_Article );
+        setContent( response?.data.content );
+      }
+      fetchArticle();
+    }
+  }, [ id ]);
+
   return {
     isSaving,
+    saved,
+
     hasContent,
     type,
     parentType,
@@ -79,6 +129,11 @@ export default function useEditor() {
     title,
     imageCover,
     content,
+    totalScore,
+    parent,
+    previousArticle,
+
+    onSubmit,
 
     setTitle : handleTextChange( setTitle ),
     setType : handleInputChange( setType ),

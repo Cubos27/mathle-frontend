@@ -21,6 +21,7 @@ const App = () => {
 
         <Route path='admin/articles' element={<ArticleDashboard />} />
         <Route path='admin/editor' element={<Editor />} />
+        <Route path='admin/editor/:id' element={<Editor />} />
         <Route path='admin/editor/:subject' element={<Editor />} />
       </Routes>
     </Router>
