@@ -1,34 +1,24 @@
 import { useState, useEffect } from "react";
 
 import fetchData from "../../../logic/utils/fetch";
-import { TArticle } from "../../../logic/types/TArticle";
+import { TArticle, TArticleJoined } from "../../../logic/types/TArticle";
 
 export default function useExplore() {
   const [ articles, setArticles ] = useState( [] );
   const [ articlesJoined, setArticlesJoined ] = useState<Array<TArticle & { relativePath?: string }>>([]);
+  const [ query, setQuery ] = useState( '' );
   const [ loading, setLoading ] = useState( true );
-  
-  const getArticle = ( id_article : number ) => articles.find( (article : TArticle) => article.ID_Article === id_article );
 
-  const getRelativePath = ( article : TArticle ) => {
-    let relativePath = `${ article.ID_Article }:${ article.title }`;
-    if ( article.type === 1 ) return relativePath;
+  const getRelativePath = ( article : TArticleJoined ) => {
+    let relativePath = `${ article.ID_Article }:${ article.article_title }`;
 
-    if ( article.type === 2 && article.ID_Parent ) {
-      const parent = getArticle( article.ID_Parent );
-      relativePath = `${ parent.ID_Article }:${ parent.title }/${ relativePath }`;
-      return relativePath;
-    }
+    if ( article.type >= 2 && article.ID_Parent )
+      relativePath = `${ article.parent_id }:${ article.parent_title }/${ relativePath }`;
 
-    if ( article.type === 3 && article.ID_Parent ) {
-      const parent = getArticle( article.ID_Parent );
-      relativePath = `${ parent.ID_Article }:${ parent.title }/${ relativePath }`;
+    if ( article.type === 3 && article.grandparent_id )
+      relativePath = `${ article.grandparent_id }:${ article.grandparent_title }/${ relativePath }`;
 
-      const grandParent = getArticle( parent.ID_Parent );
-      relativePath = `${ grandParent.ID_Article }:${ grandParent.title }/${ relativePath }`;
-      
-      return relativePath;
-    }
+    return relativePath;
   }
 
   const fetchArticles = async () => {
@@ -37,8 +27,40 @@ export default function useExplore() {
     else setLoading( false );
   }
 
+  const fetchArticlesByQuery = async () => {
+    if ( !query ) return;
+
+    setLoading( true );
+    
+    const response = await fetchData( `explore/${ encodeURIComponent( query.toLocaleLowerCase() ) }`, 'GET' );
+    if ( response ) { 
+      const formattedArticles = response.data.map( (article : TArticleJoined) => ({
+        ...article,
+        relativePath: getRelativePath( article )
+      }));
+
+      setArticles( formattedArticles );
+    }
+    else setLoading( false );
+  }
+
+  const handleQueryChange = ( event : React.ChangeEvent<HTMLInputElement> ) => {
+    setQuery( event.target.value );
+  }
+
+  const onSubmitQuery = ( event : React.FormEvent<HTMLFormElement> ) => {
+    event.preventDefault();
+    if ( !query ) return fetchArticles();
+    fetchArticlesByQuery();
+  }
+
+  const onClearQuery = ( event : React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setQuery( '' );
+  }
+
   useEffect(() => {
-    const articlesJoined = articles.map( (article : TArticle) => ({ 
+    const articlesJoined = articles.map( (article : TArticleJoined) => ({ 
       ...article, 
       relativePath: getRelativePath( article )
     }));
@@ -52,6 +74,10 @@ export default function useExplore() {
 
   return {
     articles : articlesJoined,
-    loading
+    loading,
+    query,
+    handleQueryChange,
+    onSubmitQuery,
+    onClearQuery
   }
 }
