@@ -2,7 +2,6 @@ import { SERVER_URL, SERVER_PORT } from './config';
 const SERVER = `${SERVER_URL}:${SERVER_PORT}`;
 
 export default async function fetchData( url: string, method: string = 'GET', data: any = null ) {
-  console.log(`fetchData: ${ SERVER }/api/${ url }`);
   try {
     const response = await fetch( `${ SERVER }/api/${ url }`, {
       method,

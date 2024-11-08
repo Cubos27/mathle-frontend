@@ -7,13 +7,18 @@ import ArticleCard from '../../../components/explore/article-card';
 import SearchBar from '../../../components/explore/search-bar';
 
 export default function Explore() {
-  const { articles, loading } = useExplore();
+  const { articles, loading, handleQueryChange, query, onSubmitQuery, onClearQuery } = useExplore();
 
   return (
     <Layout>
       <h2>Explore</h2>
 
-      <SearchBar />
+      <SearchBar 
+        onSubmit={ onSubmitQuery }
+        onChange={ handleQueryChange }
+        onClear={ onClearQuery }
+        value={ query }
+      />
 
       <section className={ styles[`explore__articles`] }>
         { articles.map((article) => (

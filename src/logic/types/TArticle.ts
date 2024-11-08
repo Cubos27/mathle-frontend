@@ -10,3 +10,11 @@ export type TArticle = {
   parent_type?: 'subject' | 'topic' | 'subtopic',
   description?: string
 }
+
+export type TArticleJoined = TArticle & { 
+  article_title : string,
+  parent_title : string,
+  parent_id : number,
+  grandparent_title : string,
+  grandparent_id : number,
+}

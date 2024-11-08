@@ -84,7 +84,8 @@ export default function useEditor() {
     }
 
     const url = id ? `admin/editor/${id}` : 'admin/editor';
-    const response = await fetchData( url , 'POST', data );
+    const method = id ? 'PUT' : 'POST';
+    const response = await fetchData( url , method, data );
     setIsSaving(false);
     setSaved( response?.status === 200 );
   }
