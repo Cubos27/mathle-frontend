@@ -1,14 +1,16 @@
 .main-button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: var(--secondary-color);
+  padding: var(--button__padding);
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
   color: var(--custom-white);
   user-select: none;
   -webkit-user-select: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  border-radius: 10rem;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .main-button:hover {
-  background-color: var(--tertiary-color);
+  background-color: transparent;
+  color: var(--primary-color);
 }

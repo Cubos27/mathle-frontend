@@ -1,0 +1,13 @@
+.sec-button {
+  padding: var(--button__padding);
+  border: none;
+  background-color: transparent;
+  color: var(--primary-color);
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.sec-button:hover {
+  text-decoration: underline;
+}

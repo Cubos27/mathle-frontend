@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { WEBSITE_ADDRESS } from '../../env';
 
-import mathle_icon from '../../assets/icons/mathle-icon-1.webp'
+import mathle_icon from '@assets/icons/mathle-icon-1.webp'
 
 import styles from './main-header.module.css'
 import MainButton from '../main-button';
