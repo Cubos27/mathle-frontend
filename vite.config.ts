@@ -24,10 +24,6 @@ export default defineConfig({
         replacement: path.resolve(__dirname, './src/assets'),
       },
       {
-        find: '@sections',
-        replacement: path.resolve(__dirname, './src/sections'),
-      },
-      {
         find: '@pages',
         replacement: path.resolve(__dirname, './src/pages'),
       },
